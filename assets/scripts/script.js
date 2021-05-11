@@ -19,7 +19,6 @@ form.addEventListener("submit", function (event) {
     setResult(`Height invalid`, false);
     return;
   }
-
   const imc = getImc(weight, height);
   const levelImc = getLevelImc(imc);
 
