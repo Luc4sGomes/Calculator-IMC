@@ -1,90 +1,85 @@
 //catch the event of submit of form;
 
-const form = document.querySelector('#form');
+const form = document.querySelector("#form");
 
-form.addEventListener('submit',function(event){
-    event.preventDefault();
-    
-    const inputWeight = event.target.querySelector('#weight');
-    const inputHeight = event.target.querySelector('#height');
-    const weight = Number(inputWeight.value);
-    const height = Number(inputHeight.value);
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
 
-    if(!weight){
-        setResult('Weight invalid',false);
-        return;
-    }
+  const inputWeight = event.target.querySelector("#weight");
+  const inputHeight = event.target.querySelector("#height");
+  const weight = Number(inputWeight.value);
+  const height = Number(inputHeight.value);
 
-    if(!height){
-        setResult(`Height invalid`,false);
-        return;
-    }
+  if (!weight) {
+    setResult("Weight invalid", false);
+    return;
+  }
 
-    const imc = getImc(weight,height);
-    const levelImc = getLevelImc(imc);
+  if (!height) {
+    setResult(`Height invalid`, false);
+    return;
+  }
 
-    const msg = `your IMC is: ${imc} (${levelImc})`;
+  const imc = getImc(weight, height);
+  const levelImc = getLevelImc(imc);
 
-    setResult(msg, true);
+  const msg = `your IMC is: ${imc} (${levelImc})`;
 
+  setResult(msg, true);
 });
 
+function setResult(msg, isValid) {
+  const result = document.querySelector("#result");
+  result.innerHTML = "";
 
-    function getLevelImc(imc){
-        const level = ['Under weight','Normal weight','Over weight','grade 1 obesity','grade 2 obesity',
-        'grade 3 obesity'];
+  const p = createP();
+  p.innerHTML = msg;
 
-        if(imc >= 39.9){
-            return level[5];
-        }
-        if(imc >= 34.9){
-            return level[4];
-        }
-        if(imc >= 29.9){
-            return level[3];
-        }
-        if(imc >= 24.9){
-            return level[2];
-        }
-        if(imc >= 18.5){
-            return level[1];
-        }
-        if(imc < 18.5){
-            return level[0];
-        }
-
-
-    }
-
-    function getImc(weight,height) {
-        const imc = weight / height ** 2;
-        return imc.toFixed(2);
-    }
-        
-    
-
-function createP(){
-    const p = document.createElement('p');    
-    return p;
+  if (isValid) {
+    p.classList.add("paragraph-result");
+  } else {
+    p.classList.add("bad-result");
+  }
+  p.innerHTML = msg;
+  result.appendChild(p);
 }
 
-function setResult(msg,isValid){
-    const result = document.querySelector('#result');
-    result.innerHTML = '';
+function getLevelImc(imc) {
+  const level = [
+    "Under weight",
+    "Normal weight",
+    "Over weight",
+    "Degree 1 obesity",
+    "Degree 2 obesity",
+    "Degree 3 obesity",
+  ];
 
-    
-    const p = createP();
-    p.innerHTML = msg;
-
-    if(isValid){
-        p.classList.add('paragraph-result');
-    }
-    else{
-        p.classList.add('bad-result');
-    }
-    p.innerHTML = msg;
-    result.appendChild(p);
-
-    
+  if (imc >= 39.9) {
+    return level[5];
+  }
+  if (imc >= 34.9) {
+    return level[4];
+  }
+  if (imc >= 29.9) {
+    return level[3];
+  }
+  if (imc >= 24.9) {
+    return level[2];
+  }
+  if (imc >= 18.5) {
+    return level[1];
+  }
+  if (imc < 18.5) {
+    return level[0];
+  }
 }
 
+function getImc(weight, height) {
+  const imc = weight / height ** 2;
+  return imc.toFixed(2);
+}
+
+function createP() {
+  const p = document.createElement("p");
+  return p;
+}
