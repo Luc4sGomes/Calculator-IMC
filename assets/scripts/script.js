@@ -1,4 +1,3 @@
-//catch the event of submit of form;
 
 const form = document.querySelector("#form");
 
